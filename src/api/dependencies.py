@@ -1,5 +1,5 @@
 """
-Dependências da API.
+API dependencies.
 """
 from pathlib import Path
 
@@ -11,16 +11,16 @@ from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-# Instância global do modelo
+# Global model instance
 _model_instance: CreditApprovalModel | None = None
 
 
 def get_model() -> CreditApprovalModel:
-    """Retorna instância do modelo (lazy loading)."""
+    """Return model instance (lazy loading)."""
     global _model_instance
 
     if _model_instance is None:
-        logger.info("Carregando modelo de crédito...")
+        logger.info("Loading credit model...")
         _model_instance = CreditApprovalModel()
 
         settings = get_settings()
@@ -29,17 +29,17 @@ def get_model() -> CreditApprovalModel:
 
         if not model_path.exists() or not scaler_path.exists():
             logger.warning(
-                f"Modelo não encontrado em {model_path}. "
-                "Certifique-se de treinar o modelo primeiro."
+                f"Model not found at {model_path}. "
+                "Make sure to train the model first."
             )
-            raise FileNotFoundError(f"Modelo não encontrado em {model_path}")
+            raise FileNotFoundError(f"Model not found at {model_path}")
 
         _model_instance.load(str(model_path), str(scaler_path))
-        logger.info("Modelo carregado com sucesso")
+        logger.info("Model loaded successfully")
 
     return _model_instance
 
 
 def model_loaded() -> bool:
-    """Verifica se modelo está carregado."""
+    """Check if model is loaded."""
     return _model_instance is not None

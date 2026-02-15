@@ -1,5 +1,5 @@
 """
-Script para treinar o modelo de crédito.
+Script to train the credit model.
 """
 import logging
 from pathlib import Path
@@ -17,13 +17,13 @@ logger = logging.getLogger(__name__)
 
 def generate_synthetic_data(n_samples: int = 1000) -> tuple[pd.DataFrame, pd.Series]:
     """
-    Gera dados sintéticos de crédito para demonstração.
+    Generate synthetic credit data for demonstration.
 
     Returns:
         X: Features (DataFrame)
         y: Target (Series)
     """
-    logger.info(f"Gerando {n_samples} amostras sintéticas...")
+    logger.info(f"Generating {n_samples} synthetic samples...")
 
     np.random.seed(42)
 
@@ -38,50 +38,50 @@ def generate_synthetic_data(n_samples: int = 1000) -> tuple[pd.DataFrame, pd.Ser
         }
     )
 
-    # Target: regra simples para dados sintéticos
-    # Crédito aprovado se: (score > 600) E (income > loan_amount * 0.2) E (idade > 21)
+    # Target: simple rule for synthetic data
+    # Credit approved if: (score > 600) AND (income > loan_amount * 0.2) AND (age > 21)
     y = (
         (X["credit_score"] > 600)
         & (X["income"] > X["loan_amount"] * 0.2)
         & (X["age"] > 21)
     ).astype(int)
 
-    logger.info(f"✓ Dados gerados: {len(X)} amostras")
-    logger.info(f"  Distribuição: {(y == 1).sum()} aprovados, {(y == 0).sum()} reprovados")
+    logger.info(f"✓ Data generated: {len(X)} samples")
+    logger.info(f"  Distribution: {(y == 1).sum()} approved, {(y == 0).sum()} rejected")
 
     return X, y
 
 
 def main() -> None:
-    """Função principal de treinamento."""
+    """Main training function."""
     logger.info("=" * 60)
-    logger.info("TREINAMENTO DO MODELO DE APROVAÇÃO DE CRÉDITO")
+    logger.info("CREDIT APPROVAL MODEL TRAINING")
     logger.info("=" * 60)
 
-    # Gerar dados
+    # Generate data
     X, y = generate_synthetic_data(n_samples=1000)
 
     # Split
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
     )
-    logger.info(f"✓ Dados divididos: {len(X_train)} treino, {len(X_test)} teste")
+    logger.info(f"✓ Data split: {len(X_train)} train, {len(X_test)} test")
 
-    # Treinar modelo
+    # Train model
     model = CreditApprovalModel()
     metrics = model.train(X_train, y_train)
 
-    logger.info(f"✓ Treinamento concluído:")
-    logger.info(f"  Acurácia treino: {metrics['train_accuracy']:.4f}")
+    logger.info(f"✓ Training completed:")
+    logger.info(f"  Train accuracy: {metrics['train_accuracy']:.4f}")
     logger.info(f"  Features: {metrics['n_features']}")
     logger.info(f"  Estimators: {metrics['n_estimators']}")
 
-    # Avaliar no teste
+    # Evaluate on test set
     predictions = model.predict(X_test)
     test_accuracy = (predictions == y_test.values).mean()
-    logger.info(f"  Acurácia teste: {test_accuracy:.4f}")
+    logger.info(f"  Test accuracy: {test_accuracy:.4f}")
 
-    # Salvar modelo
+    # Save model
     model_dir = Path("models_trained")
     model_dir.mkdir(exist_ok=True)
 
@@ -91,7 +91,7 @@ def main() -> None:
     )
 
     logger.info("=" * 60)
-    logger.info("✓ MODELO TREINADO E SALVO COM SUCESSO!")
+    logger.info("✓ MODEL TRAINED AND SAVED SUCCESSFULLY!")
     logger.info("=" * 60)
 
 

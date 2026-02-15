@@ -1,5 +1,5 @@
 """
-Aplicação FastAPI principal.
+Main FastAPI application.
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,14 +12,14 @@ logger = get_logger(__name__)
 
 
 def create_app() -> FastAPI:
-    """Factory para criar e configurar aplicação FastAPI."""
+    """Factory to create and configure FastAPI application."""
     setup_logging()
     settings = get_settings()
 
     app = FastAPI(
         title=settings.api_title,
         version=settings.api_version,
-        description="API de classificação para aprovação de crédito com Machine Learning",
+        description="Machine Learning API for credit approval classification",
     )
 
     # CORS
@@ -31,17 +31,17 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    # Rotas
+    # Routes
     app.include_router(router)
 
     @app.on_event("startup")
     async def startup() -> None:
-        logger.info(f"Iniciando {settings.api_title} v{settings.api_version}")
-        logger.info(f"Ambiente: {settings.environment}")
+        logger.info(f"Starting {settings.api_title} v{settings.api_version}")
+        logger.info(f"Environment: {settings.environment}")
 
     @app.on_event("shutdown")
     async def shutdown() -> None:
-        logger.info("Encerrando aplicação")
+        logger.info("Shutting down application")
 
     return app
 

@@ -1,288 +1,288 @@
-# 📋 Checklist Detalhado - Credit Approval ML API
+# 📋 Detailed Checklist - Credit Approval ML API
 
-## 🚀 Fase 1: Setup Inicial (30 min)
+## 🚀 Phase 1: Initial Setup (30 min)
 
-- [ ] **Clonar/Iniciar Repositório**
-  - [ ] `git clone` ou criar novo repo
-  - [ ] `git init` e primeiro commit
+- [ ] **Clone/Initialize Repository**
+  - [ ] `git clone` or create new repo
+  - [ ] `git init` and first commit
 
-- [ ] **Ambiente Python**
-  - [ ] Criar venv: `python -m venv venv`
-  - [ ] Ativar: `venv\Scripts\activate` (Windows) ou `source venv/bin/activate` (Linux)
-  - [ ] Instalar dependências: `make install`
+- [ ] **Python Environment**
+  - [ ] Create venv: `python -m venv venv`
+  - [ ] Activate: `venv\Scripts\activate` (Windows) or `source venv/bin/activate` (Linux)
+  - [ ] Install dependencies: `make install`
 
-- [ ] **Arquitetura de Pastas**
-  - [ ] Validar estrutura: `src/`, `tests/`, `notebooks/`, `data/`, `scripts/`, `docker/`
-  - [ ] Criar `.env` a partir de `.env.example`
+- [ ] **Folder Architecture**
+  - [ ] Validate structure: `src/`, `tests/`, `notebooks/`, `data/`, `scripts/`, `docker/`
+  - [ ] Create `.env` from `.env.example`
 
-- [ ] **Validação Inicial**
-  - [ ] Verificar `python --version` >= 3.11
-  - [ ] Verificar imports: `python -c "import fastapi; print('OK')"`
+- [ ] **Initial Validation**
+  - [ ] Check `python --version` >= 3.11
+  - [ ] Check imports: `python -c "import fastapi; print('OK')"`
 
 
-## 📊 Fase 2: Exploração e Modelagem (2-3h)
+## 📊 Phase 2: Exploration and Modeling (2-3h)
 
 - [ ] **EDA (Exploratory Data Analysis)**
-  - [ ] Abrir `notebooks/exploration.ipynb`
-  - [ ] Gerar dados sintéticos
-  - [ ] Análise estatística (mean, std, quantiles)
-  - [ ] Visualizações (histogramas, boxplots)
-  - [ ] Correlação entre features
-  - [ ] Verificar imbalance de classes
+  - [ ] Open `notebooks/exploration.ipynb`
+  - [ ] Generate synthetic data
+  - [ ] Statistical analysis (mean, std, quantiles)
+  - [ ] Visualizations (histograms, boxplots)
+  - [ ] Correlation between features
+  - [ ] Check class imbalance
 
 - [ ] **Feature Engineering**
-  - [ ] Normalização/Scaling (StandardScaler) ✓
-  - [ ] Tratamento de outliers (se necessário)
-  - [ ] Feature selection (se necessário)
-  - [ ] Documentar transformações
+  - [ ] Normalization/Scaling (StandardScaler) ✓
+  - [ ] Outlier treatment (if necessary)
+  - [ ] Feature selection (if necessary)
+  - [ ] Document transformations
 
-- [ ] **Treinamento do Modelo**
-  - [ ] Executar `make train-model`
-  - [ ] Validar: `models_trained/credit_model.pkl` criado
-  - [ ] Validar: `models_trained/scaler.pkl` criado
-  - [ ] Verificar métricas (acurácia, AUC)
-  - [ ] Teste em dados novos
+- [ ] **Model Training**
+  - [ ] Execute `make train-model`
+  - [ ] Validate: `models_trained/credit_model.pkl` created
+  - [ ] Validate: `models_trained/scaler.pkl` created
+  - [ ] Check metrics (accuracy, AUC)
+  - [ ] Test on new data
   - [ ] Feature importance analysis
 
-- [ ] **Validação do Modelo**
-  - [ ] Treino vs Teste accuracy
+- [ ] **Model Validation**
+  - [ ] Train vs Test accuracy
   - [ ] Confusion Matrix
   - [ ] ROC-AUC curve
   - [ ] Classification Report
-  - [ ] Cross-validation (opcional)
+  - [ ] Cross-validation (optional)
 
 
-## 🔌 Fase 3: API REST (2-3h)
+## 🔌 Phase 3: REST API (2-3h)
 
-- [ ] **Schemas Pydantic**
-  - [ ] `PredictionRequest` com validação
-  - [ ] `PredictionResponse` com tipos corretos
-  - [ ] `HealthResponse` para status
+- [ ] **Pydantic Schemas**
+  - [ ] `PredictionRequest` with validation
+  - [ ] `PredictionResponse` with correct types
+  - [ ] `HealthResponse` for status
   - [ ] Field descriptions (documentation)
 
-- [ ] **Carregamento do Modelo**
+- [ ] **Model Loading**
   - [ ] `get_model()` dependency function
-  - [ ] Lazy loading (primeira requisição)
-  - [ ] Cache de instância
-  - [ ] Error handling (modelo não encontrado)
+  - [ ] Lazy loading (first request)
+  - [ ] Instance caching
+  - [ ] Error handling (model not found)
 
-- [ ] **Rotas/Endpoints**
+- [ ] **Routes/Endpoints**
   - [ ] `GET /api/v1/health` ✓
   - [ ] `POST /api/v1/predict` ✓
-  - [ ] Type hints em todas as funções
-  - [ ] Docstrings em português
+  - [ ] Type hints in all functions
+  - [ ] Docstrings in English
   - [ ] Error responses (400, 422, 500)
 
-- [ ] **Configuração da App**
+- [ ] **App Configuration**
   - [ ] FastAPI app factory
   - [ ] CORS middleware
-  - [ ] Logging no startup/shutdown
-  - [ ] Título, versão, descrição
-  - [ ] Rotas organizadas em módulos
+  - [ ] Logging on startup/shutdown
+  - [ ] Title, version, description
+  - [ ] Routes organized in modules
 
-- [ ] **Testing Manual**
-  - [ ] Testar /health em http://localhost:8000/api/v1/health
-  - [ ] Testar /predict com curl ou Postman
-  - [ ] Validar response schema
-  - [ ] Testar validação (dados inválidos)
-  - [ ] Acessar Swagger docs: http://localhost:8000/docs
+- [ ] **Manual Testing**
+  - [ ] Test /health at http://localhost:8000/api/v1/health
+  - [ ] Test /predict with curl or Postman
+  - [ ] Validate response schema
+  - [ ] Test validation (invalid data)
+  - [ ] Access Swagger docs: http://localhost:8000/docs
 
 
-## ✅ Fase 4: Testes Automatizados (1-2h)
+## ✅ Phase 4: Automated Tests (1-2h)
 
-- [ ] **Setup Pytest**
-  - [ ] `pytest.ini` ou config em `pyproject.toml`
-  - [ ] Fixtures criadas
-  - [ ] TestClient configurado
+- [ ] **Pytest Setup**
+  - [ ] `pytest.ini` or config in `pyproject.toml`
+  - [ ] Fixtures created
+  - [ ] TestClient configured
 
-- [ ] **Testes da API**
+- [ ] **API Tests**
   - [ ] Test health check endpoint
   - [ ] Test successful prediction
   - [ ] Test input validation
   - [ ] Test missing fields
   - [ ] Test edge cases
 
-- [ ] **Cobertura de Testes**
-  - [ ] Executar: `make test-cov`
-  - [ ] Target: > 80% cobertura
-  - [ ] Gerar relatório HTML
-  - [ ] Identificar code gaps
+- [ ] **Test Coverage**
+  - [ ] Execute: `make test-cov`
+  - [ ] Target: > 80% coverage
+  - [ ] Generate HTML report
+  - [ ] Identify code gaps
 
-- [ ] **Validação de Testes**
-  - [ ] Todos testes passando
-  - [ ] `make test` sem erros
-  - [ ] `pytest -v` com output claro
+- [ ] **Test Validation**
+  - [ ] All tests passing
+  - [ ] `make test` without errors
+  - [ ] `pytest -v` with clear output
 
 
-## 🐳 Fase 5: Docker e Containerização (1-2h)
+## 🐳 Phase 5: Docker and Containerization (1-2h)
 
 - [ ] **Dockerfile**
   - [ ] Base image: `python:3.11-slim`
-  - [ ] WORKDIR definido
-  - [ ] Requirements copiados e instalados
-  - [ ] Código copiado
+  - [ ] WORKDIR set
+  - [ ] Requirements copied and installed
+  - [ ] Code copied
   - [ ] EXPOSE 8000
-  - [ ] Healthcheck configurado
-  - [ ] CMD uvicorn correto
+  - [ ] Healthcheck configured
+  - [ ] CMD uvicorn correct
 
 - [ ] **docker-compose.yml**
-  - [ ] Service `credit-api` definido
-  - [ ] Build context correto
-  - [ ] Ports mapeadas
-  - [ ] Environment vars configuradas
-  - [ ] Volumes para models e logs
+  - [ ] Service `credit-api` defined
+  - [ ] Build context correct
+  - [ ] Ports mapped
+  - [ ] Environment vars configured
+  - [ ] Volumes for models and logs
   - [ ] Health check
 
-- [ ] **Build e Teste**
-  - [ ] Executar: `make docker-build`
-  - [ ] Validar: `docker images | grep credit`
-  - [ ] Executar: `make docker-run`
-  - [ ] Testar: `curl http://localhost:8000/api/v1/health`
+- [ ] **Build and Test**
+  - [ ] Execute: `make docker-build`
+  - [ ] Validate: `docker images | grep credit`
+  - [ ] Execute: `make docker-run`
+  - [ ] Test: `curl http://localhost:8000/api/v1/health`
   - [ ] Logs: `docker logs credit-api`
   - [ ] Stop: `make docker-stop`
 
 - [ ] **Troubleshooting**
-  - [ ] Verificar volumes estão mounted
-  - [ ] Model path acessível no container
-  - [ ] Porta 8000 não em conflito
-  - [ ] Permissions corretos
+  - [ ] Check volumes are mounted
+  - [ ] Model path accessible in container
+  - [ ] Port 8000 not in conflict
+  - [ ] Correct permissions
 
 
-## 🎨 Fase 6: Padrões de Código e Qualidade (1h)
+## 🎨 Phase 6: Code Patterns and Quality (1h)
 
 - [ ] **Type Hints**
-  - [ ] Verificar todo arquivo `.py`
-  - [ ] Funções com input/output tipos
-  - [ ] Classes com type annotations
-  - [ ] `mypy` passar (opcional)
+  - [ ] Check all `.py` files
+  - [ ] Functions with input/output types
+  - [ ] Classes with type annotations
+  - [ ] `mypy` pass (optional)
 
 - [ ] **Logging**
-  - [ ] Usar `get_logger(__name__)` em todos módulos
-  - [ ] Logs estruturados (JSON)
-  - [ ] Log levels apropriados (INFO, ERROR, WARNING)
-  - [ ] `logs/` directory funcional
+  - [ ] Use `get_logger(__name__)` in all modules
+  - [ ] Structured logs (JSON)
+  - [ ] Appropriate log levels (INFO, ERROR, WARNING)
+  - [ ] `logs/` directory functional
 
-- [ ] **Configurações**
-  - [ ] Todas env vars em `.env.example`
-  - [ ] `Settings` classe usada
-  - [ ] Senhas/secrets em `.env` (nunca committed)
-  - [ ] Modo production vs development
+- [ ] **Configuration**
+  - [ ] All env vars in `.env.example`
+  - [ ] `Settings` class used
+  - [ ] Passwords/secrets in `.env` (never committed)
+  - [ ] Production vs development mode
 
-- [ ] **Docstrings e Comentários**
-  - [ ] Funções com docstrings
-  - [ ] Português claro
-  - [ ] Args e Returns documentados
-  - [ ] Classes com __doc__
+- [ ] **Docstrings and Comments**
+  - [ ] Functions with docstrings
+  - [ ] Clear English
+  - [ ] Args and Returns documented
+  - [ ] Classes with __doc__
 
-- [ ] **Formatação de Código** (opcional)
-  - [ ] Executar: `make format`
+- [ ] **Code Formatting** (optional)
+  - [ ] Execute: `make format`
   - [ ] Black config (line length 100)
-  - [ ] isort para imports
-  - [ ] flake8 ou pylint: `make lint`
+  - [ ] isort for imports
+  - [ ] flake8 or pylint: `make lint`
 
 
-## 📚 Fase 7: Documentação (1h)
+## 📚 Phase 7: Documentation (1h)
 
 - [ ] **README.md**
-  - [ ] Visão geral do projeto ✓
-  - [ ] Arquitetura explicada ✓
+  - [ ] Project overview ✓
+  - [ ] Architecture explained ✓
   - [ ] Setup instructions ✓
-  - [ ] Como treinar modelo ✓
-  - [ ] Como rodar API ✓
+  - [ ] How to train model ✓
+  - [ ] How to run API ✓
   - [ ] Docker instructions ✓
-  - [ ] API endpoints documentados ✓
-  - [ ] Exemplos de curl/requests ✓
+  - [ ] API endpoints documented ✓
+  - [ ] Examples with curl/requests ✓
 
-- [ ] **Documentação Inline**
-  - [ ] Docstrings em todas funções
-  - [ ] Type hints documentados
-  - [ ] Config vars explicadas
-  - [ ] Comments para lógica complexa
+- [ ] **Inline Documentation**
+  - [ ] Docstrings in all functions
+  - [ ] Type hints documented
+  - [ ] Config vars explained
+  - [ ] Comments for complex logic
 
 - [ ] **OpenAPI/Swagger**
-  - [ ] Automático via FastAPI ✓
-  - [ ] Acessível em /docs
-  - [ ] Descriptions nas rotas
-  - [ ] Exemplos nos schemas
+  - [ ] Automatic via FastAPI ✓
+  - [ ] Accessible at /docs
+  - [ ] Descriptions in routes
+  - [ ] Examples in schemas
 
 - [ ] **Notebook**
-  - [ ] Código bem organizado
+  - [ ] Well-organized code
   - [ ] Markdown explanations ✓
-  - [ ] Visualizações funcionando
-  - [ ] Reprodutível passo a passo
+  - [ ] Working visualizations
+  - [ ] Step-by-step reproducible
 
 
-## 🚀 Fase 8: Deploy Preparação (Opcional)
+## 🚀 Phase 8: Deploy Preparation (Optional)
 
 - [ ] **Production Readiness**
-  - [ ] Environment variables corretos
-  - [ ] Logging em arquivos
-  - [ ] Error handling robusto
-  - [ ] Health checks funcionando
-  - [ ] Secrets em .env
+  - [ ] Correct environment variables
+  - [ ] Logging in files
+  - [ ] Robust error handling
+  - [ ] Working health checks
+  - [ ] Secrets in .env
 
 - [ ] **CI/CD (GitHub Actions)**
-  - [ ] `.github/workflows/test.yml` (rodar testes)
+  - [ ] `.github/workflows/test.yml` (run tests)
   - [ ] `.github/workflows/docker.yml` (build image)
-  - [ ] Validação de mudanças
+  - [ ] Validation of changes
 
-- [ ] **Platforms (opcional)**
+- [ ] **Platforms (optional)**
   - [ ] Heroku: Procfile + runtime.txt
   - [ ] Railway: railway.json
   - [ ] AWS: Lambda / Fargate
   - [ ] GCP / Azure
 
 - [ ] **Security**
-  - [ ] HTTPS em produção
-  - [ ] API keys se necessário
-  - [ ] CORS configurado corretamente
+  - [ ] HTTPS in production
+  - [ ] API keys if necessary
+  - [ ] CORS configured correctly
   - [ ] Input validation
-  - [ ] No secrets em código
+  - [ ] No secrets in code
 
 
-## ✨ Fase 9: Verificação Final
+## ✨ Phase 9: Final Verification
 
-- [ ] **Funcionalidade End-to-End**
-  - [ ] `make install` sem erros
-  - [ ] `make train-model` + modelo criado
-  - [ ] `make run` + API funciona
-  - [ ] `make test` tudo passa
-  - [ ] `make docker-run` funciona
+- [ ] **End-to-End Functionality**
+  - [ ] `make install` without errors
+  - [ ] `make train-model` + model created
+  - [ ] `make run` + API works
+  - [ ] `make test` all pass
+  - [ ] `make docker-run` works
 
-- [ ] **Documentação Completa**
-  - [ ] README cobrindo tudo
-  - [ ] Código bem documentado
-  - [ ] Exemplos funcionam
-  - [ ] Instrções claras
+- [ ] **Complete Documentation**
+  - [ ] README covers everything
+  - [ ] Code well documented
+  - [ ] Examples work
+  - [ ] Clear instructions
 
 - [ ] **Git/Repository**
-  - [ ] `.gitignore` correto
-  - [ ] Sem arquivos temporários versionados
-  - [ ] README no root
-  - [ ] Commits descritivos
-  - [ ] LICENSE presente
+  - [ ] `.gitignore` correct
+  - [ ] No temporary files versioned
+  - [ ] README in root
+  - [ ] Descriptive commits
+  - [ ] LICENSE present
 
 - [ ] **Portfolio Quality**
-  - [ ] Código profissional
-  - [ ] Padrões OOP/FP
+  - [ ] Professional code
+  - [ ] OOP/FP patterns
   - [ ] PEP 8 compliance
-  - [ ] Tests inclusos
-  - [ ] Docker incluído
-  - [ ] GitHub README impressionante
+  - [ ] Tests included
+  - [ ] Docker included
+  - [ ] Impressive GitHub README
 
 
 ---
 
-## 📊 Progresso
+## 📊 Progress
 
-| Fase | Status | ETA |
+| Phase | Status | ETA |
 |------|--------|-----|
 | 1. Setup | ✓ | 30min |
-| 2. Modelagem | ⏳ | 2-3h |
+| 2. Modeling | ⏳ | 2-3h |
 | 3. API | ⏳ | 2-3h |
-| 4. Testes | ⏳ | 1-2h |
+| 4. Tests | ⏳ | 1-2h |
 | 5. Docker | ⏳ | 1-2h |
-| 6. Qualidade | ⏳ | 1h |
+| 6. Quality | ⏳ | 1h |
 | 7. Docs | ⏳ | 1h |
 | 8. Deploy | ⏳ | 1h (opt) |
 | 9. Final Check | ⏳ | 30min |
@@ -292,15 +292,15 @@
 
 ## 🎯 Success Criteria
 
-- [ ] Todas as fases marcadas como ✓
-- [ ] `make test` passa com sucesso
-- [ ] `make docker-run` funciona
-- [ ] API responde em http://localhost:8000/docs
-- [ ] Modelo prediz corretamente
-- [ ] Código é legível e profissional
-- [ ] README é claro e completo
-- [ ] Pronto para portfólio!
+- [ ] All phases marked as ✓
+- [ ] `make test` passes successfully
+- [ ] `make docker-run` works
+- [ ] API responds at http://localhost:8000/docs
+- [ ] Model predicts correctly
+- [ ] Code is readable and professional
+- [ ] README is clear and complete
+- [ ] Ready for portfolio!
 
 ---
 
-**Ao terminar toda checklist: PRONTO PARA PRODUÇÃO! 🚀**
+**Upon completing entire checklist: READY FOR PRODUCTION! 🚀**

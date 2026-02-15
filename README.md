@@ -4,132 +4,132 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3+-orange.svg)](https://scikit-learn.org/)
 
-Projeto de portfólio: **API REST para predição de aprovação de crédito** usando Machine Learning com FastAPI, com padrões profissionais de código, logging, config via variáveis de ambiente e suporte a Docker.
+Portfolio project: **REST API for credit approval prediction** using Machine Learning with FastAPI, with professional code patterns, logging, environment-based configuration, and Docker support.
 
-## 📋 Índice
+## 📋 Table of Contents
 
-- [Arquitetura](#arquitetura)
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação](#instalação)
-- [Treinamento](#treinamento)
-- [Execução](#execução)
+- [Architecture](#architecture)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Training](#training)
+- [Running](#running)
 - [Docker](#docker)
 - [API](#api)
-- [Testes](#testes)
-- [Padrões de Código](#padrões-de-código)
+- [Testing](#testing)
+- [Code Patterns](#code-patterns)
 
-## 🏗️ Arquitetura
+## 🏗️ Architecture
 
 ```
 credit-approval-ml-api/
-├── src/                          # Código-fonte principal
-│   ├── api/                      # API FastAPI
-│   │   ├── main.py              # App principal
-│   │   ├── routes.py            # Rotas
-│   │   ├── schemas.py           # Schemas Pydantic
-│   │   └── dependencies.py      # Injeção de dependências
-│   ├── models/                   # Modelos ML
-│   │   └── credit_model.py      # Classificador de crédito
-│   └── utils/                    # Utilitários
-│       ├── config.py            # Configurações (env)
-│       ├── logger.py            # Logging estruturado
+├── src/                          # Main source code
+│   ├── api/                      # FastAPI application
+│   │   ├── main.py              # App factory
+│   │   ├── routes.py            # Route endpoints
+│   │   ├── schemas.py           # Pydantic schemas
+│   │   └── dependencies.py      # Dependency injection
+│   ├── models/                   # ML models
+│   │   └── credit_model.py      # Credit classifier
+│   └── utils/                    # Utilities
+│       ├── config.py            # Configuration (env)
+│       ├── logger.py            # Structured logging
 │       └── __init__.py
 │
 ├── notebooks/                    # Jupyter Notebooks
-│   └── exploration.ipynb        # EDA e treinamento
+│   └── exploration.ipynb        # EDA and training
 │
-├── tests/                        # Testes
-│   ├── test_api.py             # Testes da API
+├── tests/                        # Tests
+│   ├── test_api.py             # API tests
 │   └── __init__.py
 │
-├── scripts/                      # Scripts utilitários
-│   └── train_model.py           # Treinamento do modelo
+├── scripts/                      # Utility scripts
+│   └── train_model.py           # Model training
 │
-├── data/                         # Dados (não versionados)
-│   ├── raw/                     # Dados brutos
-│   └── processed/               # Dados processados
+├── data/                         # Data (not versioned)
+│   ├── raw/                     # Raw data
+│   └── processed/               # Processed data
 │
-├── models_trained/               # Modelos treinados
-│   ├── credit_model.pkl         # Modelo serializado
+├── models_trained/               # Trained models
+│   ├── credit_model.pkl         # Serialized model
 │   └── scaler.pkl               # StandardScaler
 │
-├── docker/                       # Arquivos Docker
+├── docker/                       # Docker files
 │   └── Dockerfile
 │
-├── logs/                         # Logs (não versionado)
+├── logs/                         # Logs (not versioned)
 │
 ├── docker-compose.yml           # Docker Compose
-├── Makefile                     # Automação
-├── requirements.txt             # Dependências Python
-├── .env.example                 # Exemplo de variáveis de ambiente
+├── Makefile                     # Task automation
+├── requirements.txt             # Python dependencies
+├── .env.example                 # Environment variables example
 ├── .gitignore                   # Git ignore
-└── README.md                    # Este arquivo
+└── README.md                    # This file
 ```
 
-## 📋 Checklist de Desenvolvimento
+## 📋 Development Checklist
 
-- [ ] **Fase 1: Setup**
-  - [ ] Clonar repositório
-  - [ ] Criar ambiente virtualenv
-  - [ ] Instalar dependências (`make install`)
-  - [ ] Configurar `.env`
+- [ ] **Phase 1: Setup**
+  - [ ] Clone repository
+  - [ ] Create virtualenv environment
+  - [ ] Install dependencies (`make install`)
+  - [ ] Configure `.env`
 
-- [ ] **Fase 2: Modelagem**
-  - [ ] Exploração de dados (notebook)
+- [ ] **Phase 2: Modeling**
+  - [ ] Data exploration (notebook)
   - [ ] Feature engineering
-  - [ ] Treinamento do modelo (`make train-model`)
-  - [ ] Avaliação e validação
-  - [ ] Serializar modelo em pickle
+  - [ ] Model training (`make train-model`)
+  - [ ] Evaluation and validation
+  - [ ] Serialize model to pickle
 
-- [ ] **Fase 3: API**
-  - [ ] Implementar schemas Pydantic (validação)
-  - [ ] Implementar rotas REST
-  - [ ] Adicionar health check
-  - [ ] Logging estruturado
-  - [ ] Tratamento de erros
+- [ ] **Phase 3: API**
+  - [ ] Implement Pydantic schemas (validation)
+  - [ ] Implement REST routes
+  - [ ] Add health check
+  - [ ] Structured logging
+  - [ ] Error handling
 
-- [ ] **Fase 4: Testes**
-  - [ ] Testes unitários
-  - [ ] Testes de integração
-  - [ ] Testes com client TestClient (FastAPI)
-  - [ ] Cobertura de código (`make test-cov`)
+- [ ] **Phase 4: Testing**
+  - [ ] Unit tests
+  - [ ] Integration tests
+  - [ ] TestClient tests (FastAPI)
+  - [ ] Code coverage (`make test-cov`)
 
-- [ ] **Fase 5: Docker**
-  - [ ] Criar Dockerfile
-  - [ ] Criar docker-compose.yml
-  - [ ] Testar build (`make docker-build`)
-  - [ ] Testar run (`make docker-run`)
+- [ ] **Phase 5: Docker**
+  - [ ] Create Dockerfile
+  - [ ] Create docker-compose.yml
+  - [ ] Test build (`make docker-build`)
+  - [ ] Test run (`make docker-run`)
   - [ ] Health checks
 
-- [ ] **Fase 6: Qualidade**
+- [ ] **Phase 6: Quality**
   - [ ] Linting (`make lint`)
   - [ ] Type hints (mypy)
-  - [ ] Formatação (`make format`)
-  - [ ] Documentação de código
-  - [ ] Docstrings em português
+  - [ ] Formatting (`make format`)
+  - [ ] Code documentation
+  - [ ] English docstrings
 
-- [ ] **Fase 7: Deploy (opcional)**
-  - [ ] Preparar para Heroku/Railway
-  - [ ] Guarder secrets com segurança
+- [ ] **Phase 7: Deployment (optional)**
+  - [ ] Prepare for Heroku/Railway
+  - [ ] Secure secrets management
   - [ ] CI/CD pipeline (GitHub Actions)
 
-## 🔧 Pré-requisitos
+## 🔧 Requirements
 
 - Python 3.11+
-- pip ou conda
-- Docker e Docker Compose (opcional)
+- pip or conda
+- Docker and Docker Compose (optional)
 - Git
 
-## 📦 Instalação
+## 📦 Installation
 
-### 1. Clone o repositório
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/seu-usuario/credit-approval-ml-api.git
+git clone https://github.com/your-user/credit-approval-ml-api.git
 cd credit-approval-ml-api
 ```
 
-### 2. Criar ambiente virtual
+### 2. Create virtual environment
 
 ```bash
 # Windows
@@ -141,60 +141,60 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Instalar dependências
+### 3. Install dependencies
 
 ```bash
 make install
 ```
 
-Ou manualmente:
+Or manually:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configurar variáveis de ambiente
+### 4. Configure environment variables
 
 ```bash
-# Copiar arquivo de exemplo
+# Copy example file
 cp .env.example .env
 
-# Editar .env com suas configurações (opcional)
+# Edit .env with your settings (optional)
 ```
 
-## 🤖 Treinamento do Modelo
+## 🤖 Model Training
 
-O script gera dados sintéticos, treina o modelo e o serializa:
+The script generates synthetic data, trains the model, and serializes it:
 
 ```bash
 make train-model
 ```
 
-Ou:
+Or:
 
 ```bash
 python scripts/train_model.py
 ```
 
-**Output esperado:**
-- `models_trained/credit_model.pkl` (modelo Random Forest)
+**Expected output:**
+- `models_trained/credit_model.pkl` (Random Forest model)
 - `models_trained/scaler.pkl` (StandardScaler)
-- Log de acurácia e métricas
+- Accuracy and metrics log
 
-## ▶️ Execução Local
+## ▶️ Running Locally
 
-### Modo Desenvolvimento
+### Development Mode
 
 ```bash
 make run
 ```
 
-A API estará disponível em:
+The API will be available at:
 - **API**: http://localhost:8000
-- **Docs Swagger**: http://localhost:8000/docs
-- **Docs ReDoc**: http://localhost:8000/redoc
+- **Swagger Docs**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
 
-### Exemplo de Requisição
+### Example Request
 
 ```bash
 curl -X POST "http://localhost:8000/api/v1/predict" \
@@ -209,7 +209,7 @@ curl -X POST "http://localhost:8000/api/v1/predict" \
   }'
 ```
 
-**Response esperada:**
+**Expected response:**
 
 ```json
 {

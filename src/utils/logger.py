@@ -1,5 +1,5 @@
 """
-Módulo de logging estruturado.
+Structured logging module.
 """
 import json
 import logging
@@ -11,7 +11,7 @@ from src.utils.config import get_settings
 
 
 def setup_logging() -> None:
-    """Configura logging estruturado com JSON."""
+    """Configure structured logging with JSON format."""
     settings = get_settings()
     log_dir = Path("logs")
     log_dir.mkdir(exist_ok=True)
@@ -48,5 +48,5 @@ def setup_logging() -> None:
 
 
 def get_logger(name: str) -> logging.Logger:
-    """Retorna logger com nome específico."""
+    """Get logger with specific name."""
     return logging.getLogger(name)

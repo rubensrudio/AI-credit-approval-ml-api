@@ -1,5 +1,5 @@
 """
-Testes da API.
+API tests.
 """
 import pytest
 from fastapi.testclient import TestClient
@@ -9,13 +9,13 @@ from src.api.main import create_app
 
 @pytest.fixture
 def client() -> TestClient:
-    """Cliente de teste da API."""
+    """API test client."""
     app = create_app()
     return TestClient(app)
 
 
 def test_health_check(client: TestClient) -> None:
-    """Testa endpoint de health check."""
+    """Test health check endpoint."""
     response = client.get("/api/v1/health")
     assert response.status_code == 200
     data = response.json()
@@ -24,7 +24,7 @@ def test_health_check(client: TestClient) -> None:
 
 
 def test_predict_success(client: TestClient) -> None:
-    """Testa predição com dados válidos."""
+    """Test prediction with valid data."""
     payload = {
         "age": 35,
         "income": 50000,
@@ -35,7 +35,7 @@ def test_predict_success(client: TestClient) -> None:
     }
     response = client.post("/api/v1/predict", json=payload)
     
-    # Se modelo não estiver carregado, será 500
+    # If model is not loaded, it will be 500
     if response.status_code != 500:
         assert response.status_code == 200
         data = response.json()
@@ -45,9 +45,9 @@ def test_predict_success(client: TestClient) -> None:
 
 
 def test_predict_invalid_input(client: TestClient) -> None:
-    """Testa validação de entrada."""
+    """Test input validation."""
     invalid_payload = {
-        "age": -5,  # Inválido
+        "age": -5,  # Invalid
         "income": 50000,
         "credit_score": 750,
         "loan_amount": 20000,
@@ -59,7 +59,7 @@ def test_predict_invalid_input(client: TestClient) -> None:
 
 
 def test_predict_missing_fields(client: TestClient) -> None:
-    """Testa requisição com campos faltantes."""
-    invalid_payload = {"age": 35}  # Faltam campos
+    """Test request with missing fields."""
+    invalid_payload = {"age": 35}  # Missing fields
     response = client.post("/api/v1/predict", json=invalid_payload)
     assert response.status_code == 422

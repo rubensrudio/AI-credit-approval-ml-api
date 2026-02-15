@@ -1,5 +1,5 @@
 """
-Rotas principais da API.
+Main API routes.
 """
 from typing import Annotated
 
@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 
 @router.get("/health", response_model=HealthResponse)
 async def health_check() -> HealthResponse:
-    """Status da aplicação e disponibilidade do modelo."""
+    """Application status and model availability."""
     settings = get_settings()
     return HealthResponse(
         status="healthy",
@@ -33,12 +33,12 @@ async def predict(
     model: Annotated[CreditApprovalModel, Depends(get_model)],
 ) -> PredictionResponse:
     """
-    Prediz aprovação de crédito.
+    Predict credit approval.
 
-    Recebe dados do cliente e retorna se o crédito deve ser aprovado.
+    Receives customer data and returns whether credit should be approved.
     """
     try:
-        # Preparar dados para predição
+        # Prepare data for prediction
         X = pd.DataFrame(
             {
                 "age": [request.age],
@@ -50,11 +50,11 @@ async def predict(
             }
         )
 
-        # Predição
+        # Prediction
         prediction = model.predict(X)[0]
         probability = model.predict_proba(X)[0][1]
 
-        # Determinar nível de risco
+        # Determine risk level
         if probability >= 0.8:
             risk_level = "low"
         elif probability >= 0.5:
@@ -63,7 +63,7 @@ async def predict(
             risk_level = "high"
 
         logger.info(
-            f"Predição realizada: approved={bool(prediction)}, "
+            f"Prediction made: approved={bool(prediction)}, "
             f"probability={probability:.4f}"
         )
 
@@ -74,5 +74,5 @@ async def predict(
         )
 
     except Exception as e:
-        logger.error(f"Erro em predição: {str(e)}")
-        raise HTTPException(status_code=500, detail="Erro ao processar predição") from e
+        logger.error(f"Error during prediction: {str(e)}")
+        raise HTTPException(status_code=500, detail="Error processing prediction") from e
