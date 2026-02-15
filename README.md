@@ -424,8 +424,4 @@ MIT
 
 ## 👤 Autor
 
-Seu Nome - Portfolio Project
-
----
-
-**Desenvolvido com ❤️ para demonstrar padrões profissionais de ML + API**
+Rubens Rudio - Portfolio Project
