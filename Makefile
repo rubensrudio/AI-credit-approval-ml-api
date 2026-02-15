@@ -26,7 +26,7 @@ help:
 
 setup:
 	@echo "Configurando ambiente..."
-	@if not exist "$(ENV_FILE)" (copy .env.example $(ENV_FILE)) else (echo "$(ENV_FILE) já existe")
+	@[ -f "$(ENV_FILE)" ] || cp .env.example $(ENV_FILE)
 	@echo "✓ Arquivo .env criado (revise as variáveis se necessário)"
 
 install: setup
@@ -81,9 +81,9 @@ docker-stop:
 
 clean:
 	@echo "Limpando arquivos temporários..."
-	@rd /s /q __pycache__ 2>nul || true
-	@rd /s /q .pytest_cache 2>nul || true
-	@rd /s /q .coverage 2>nul || true
-	@rd /s /q htmlcov 2>nul || true
-	@del /q *.log 2>nul || true
+	@find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+	@find . -type d -name ".pytest_cache" -exec rm -rf {} + 2>/dev/null || true
+	@find . -type d -name ".coverage" -exec rm -rf {} + 2>/dev/null || true
+	@find . -type d -name "htmlcov" -exec rm -rf {} + 2>/dev/null || true
+	@find . -type f -name "*.log" -delete 2>/dev/null || true
 	@echo "✓ Limpeza concluída"
