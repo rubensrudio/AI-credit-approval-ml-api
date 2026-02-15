@@ -36,7 +36,7 @@ install: setup
 
 train-model:
 	@echo "Training model..."
-	$(PYTHON) scripts/train_model.py
+	PYTHONPATH=. $(PYTHON) scripts/train_model.py
 	@echo "✓ Model trained"
 
 lint:

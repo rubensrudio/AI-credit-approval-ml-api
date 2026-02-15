@@ -221,21 +221,21 @@ curl -X POST "http://localhost:8000/api/v1/predict" \
 
 ## 🐳 Docker
 
-### Build da Imagem
+### Build the Image
 
 ```bash
 make docker-build
 ```
 
-### Executar Container
+### Run Container
 
 ```bash
 make docker-run
 ```
 
-API estará em: http://localhost:8000
+API will be at: http://localhost:8000
 
-### Parar Containers
+### Stop Containers
 
 ```bash
 make docker-stop
@@ -245,7 +245,7 @@ make docker-stop
 
 ### GET `/api/v1/health`
 
-Health check e status do modelo.
+Health check and model status.
 
 **Response:**
 
@@ -259,7 +259,7 @@ Health check e status do modelo.
 
 ### POST `/api/v1/predict`
 
-Prediz aprovação de crédito.
+Predict credit approval.
 
 **Request:**
 
@@ -284,7 +284,7 @@ Prediz aprovação de crédito.
 }
 ```
 
-**Validação:**
+**Validation:**
 - `age`: 0 < age ≤ 100
 - `income`: income > 0
 - `credit_score`: 0 ≤ score ≤ 1000
@@ -292,52 +292,52 @@ Prediz aprovação de crédito.
 - `employment_years`: 0 ≤ years ≤ 60
 - `existing_debts`: debts ≥ 0
 
-## ✅ Testes
+## ✅ Testing
 
-### Rodar todos os testes
+### Run all tests
 
 ```bash
 make test
 ```
 
-### Testes com cobertura
+### Tests with coverage
 
 ```bash
 make test-cov
 ```
 
-Relatório em: `htmlcov/index.html`
+Report at: `htmlcov/index.html`
 
-### Testes específicos
+### Specific tests
 
 ```bash
 pytest tests/test_api.py -v
 ```
 
-## 📐 Padrões de Código
+## 📐 Code Patterns
 
 ### 1. **Type Hints**
 
-Todos os módulos usam type hints completos:
+All modules use complete type hints:
 
 ```python
 def predict(self, X: pd.DataFrame) -> np.ndarray:
-    """Realiza predição."""
+    """Perform prediction."""
     pass
 ```
 
-### 2. **Logging Estruturado**
+### 2. **Structured Logging**
 
-Logs em JSON com contexto completo:
+JSON logs with full context:
 
 ```python
 logger = get_logger(__name__)
-logger.info(f"Modelo treinado. Acurácia: {accuracy:.4f}")
+logger.info(f"Model trained. Accuracy: {accuracy:.4f}")
 ```
 
-### 3. **Configuração via Ambiente**
+### 3. **Configuration via Environment**
 
-Variáveis via `.env` usando `pydantic-settings`:
+Variables via `.env` using `pydantic-settings`:
 
 ```python
 from src.utils.config import get_settings
@@ -346,16 +346,16 @@ settings = get_settings()
 print(settings.api_port)  # 8000
 ```
 
-### 4. **Validação com Pydantic**
+### 4. **Validation with Pydantic**
 
-Schemas automáticos e validação:
+Automatic schemas and validation:
 
 ```python
 class PredictionRequest(BaseModel):
     age: float = Field(..., gt=0, le=100)
 ```
 
-### 5. **Injeção de Dependências**
+### 5. **Dependency Injection**
 
 FastAPI dependencies pattern:
 
@@ -368,21 +368,21 @@ async def predict(
     pass
 ```
 
-### 6. **Docstrings em Português**
+### 6. **English Docstrings**
 
-Documentação clara e em PT-BR:
+Clear documentation with complete examples:
 
 ```python
 def train(self, X_train: pd.DataFrame, y_train: pd.Series) -> dict:
     """
-    Treina o modelo de classificação.
+    Train the classification model.
     
     Args:
-        X_train: Features de treino
-        y_train: Target de treino
+        X_train: Training features
+        y_train: Training target
     
     Returns:
-        Métricas de treinamento
+        Training metrics
     """
     pass
 ```
@@ -390,38 +390,38 @@ def train(self, X_train: pd.DataFrame, y_train: pd.Series) -> dict:
 ## 🛠️ Makefile Commands
 
 ```bash
-make help           # Mostra todos os comandos
-make install        # Instala dependências
-make train-model    # Treina o modelo
-make run            # Executa API localmente
-make test           # Roda testes
-make test-cov       # Testes com cobertura
-make docker-build   # Compila Docker
-make docker-run     # Executa Docker
-make clean          # Limpa arquivos temporários
-make format         # Formata código
+make help           # Show all commands
+make install        # Install dependencies
+make train-model    # Train the model
+make run            # Execute API locally
+make test           # Run tests
+make test-cov       # Tests with coverage
+make docker-build   # Build Docker
+make docker-run     # Run Docker
+make clean          # Clean temporary files
+make format         # Format code
 make lint           # Linting
 ```
 
-## 📊 Estrutura do Modelo
+## 📊 Model Structure
 
-**Tipo:** Random Forest Classifier
-- **Estimators:** 100 árvores
+**Type:** Random Forest Classifier
+- **Estimators:** 100 trees
 - **Max Depth:** 10
-- **Normalização:** StandardScaler
+- **Normalization:** StandardScaler
 
 **Features:**
-- `age`: Idade do cliente
-- `income`: Renda anual
-- `credit_score`: Score de crédito
-- `loan_amount`: Valor solicitado
-- `employment_years`: Anos de emprego
-- `existing_debts`: Débitos existentes
+- `age`: Customer age
+- `income`: Annual income
+- `credit_score`: Credit score
+- `loan_amount`: Requested amount
+- `employment_years`: Years of employment
+- `existing_debts`: Existing debts
 
-## 📝 Licença
+## 📝 License
 
 MIT
 
-## 👤 Autor
+## 👤 Author
 
 Rubens Rudio
