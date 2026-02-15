@@ -4,7 +4,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3+-orange.svg)](https://scikit-learn.org/)
 
-Portfolio project: **REST API for credit approval prediction** using Machine Learning with FastAPI, with professional code patterns, logging, environment-based configuration, and Docker support.
+**REST API for credit approval prediction** using Machine Learning with FastAPI, with professional code patterns, logging, environment-based configuration, and Docker support.
 
 ## 📋 Table of Contents
 
@@ -424,4 +424,4 @@ MIT
 
 ## 👤 Autor
 
-Rubens Rudio - Portfolio Project
+Rubens Rudio
