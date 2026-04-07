@@ -144,14 +144,15 @@ source venv/bin/activate
 ### 3. Install dependencies
 
 ```bash
+# Linux/Mac (via Makefile)
 make install
-```
 
-Or manually:
-
-```bash
+# Or manually on any platform
 pip install -r requirements.txt
+pip install -e ".[dev]"       # editable mode (makes imports work everywhere)
 ```
+
+> **Windows tip:** Run `setup.bat` to do all setup automatically.
 
 ### 4. Configure environment variables
 
@@ -167,13 +168,11 @@ cp .env.example .env
 The script generates synthetic data, trains the model, and serializes it:
 
 ```bash
+# Linux/Mac
 make train-model
-```
 
-Or:
-
-```bash
-python scripts/train_model.py
+# Windows (without PYTHONPATH issues)
+python -c "from scripts.train_model import main; main()"
 ```
 
 **Expected output:**
@@ -186,7 +185,11 @@ python scripts/train_model.py
 ### Development Mode
 
 ```bash
+# Linux/Mac
 make run
+
+# Windows
+uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 The API will be available at:

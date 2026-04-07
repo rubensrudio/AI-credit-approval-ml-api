@@ -1,11 +1,49 @@
-# Configuração Black para formatação
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "credit-approval-ml-api"
+version = "1.0.0"
+description = "REST API for credit approval prediction using Machine Learning with FastAPI"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+dependencies = [
+    "fastapi==0.135.3",
+    "uvicorn[standard]==0.44.0",
+    "pydantic==2.12.5",
+    "pydantic-settings==2.13.1",
+    "starlette==1.0.0",
+    "scikit-learn==1.8.0",
+    "pandas==3.0.2",
+    "numpy==2.4.4",
+    "joblib==1.5.3",
+    "scipy==1.17.1",
+    "python-multipart==0.0.24",
+    "python-dotenv==1.2.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.0.2",
+    "pytest-cov==7.1.0",
+    "httpx==0.28.1",
+    "requests==2.33.1",
+]
+
+[project.scripts]
+train-model = "scripts.train_model:main"
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+
 [tool.black]
 line-length = 100
 target-version = ["py311"]
 include = '\.pyi?$'
-extend-exclude = '''
-/(
-  # directories
+extend-exclude = '''/(
   \.eggs
   | \.git
   | \.hg
@@ -17,23 +55,20 @@ extend-exclude = '''
 )/
 '''
 
-# Configuração isort para imports
 [tool.isort]
 profile = "black"
-multi_line_mode = 3
+multi_line_output = 3
 include_trailing_comma = true
 force_grid_wrap = 0
 use_hanging_indent = true
 ensure_newline_before_comments = true
 line_length = 100
 
-# Pytest
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 addopts = "-v --tb=short"
 
-# Type checking (mypy)
 [tool.mypy]
 python_version = "3.11"
 ignore_missing_imports = true

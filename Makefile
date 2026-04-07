@@ -1,8 +1,8 @@
-.PHONY: help install lint format test run docs docker-build docker-run clean
+.PHONY: help setup install lint format test run docs docker-build docker-run docker-stop clean
 
-# Variáveis
-PYTHON := python
-PIP := pip
+# Variables
+PYTHON := python3
+PIP := pip3
 PORT := 8000
 ENV_FILE := .env
 
@@ -11,7 +11,9 @@ help:
 	@echo "===================================="
 	@echo ""
 	@echo "Available commands:"
+	@echo "  make setup          - Create .env and install dependencies"
 	@echo "  make install        - Install dependencies"
+	@echo "  make edit           - Install in editable mode (dev)"
 	@echo "  make train-model    - Train ML model"
 	@echo "  make lint           - Run linter (flake8, pylint)"
 	@echo "  make format         - Format code (black, isort)"
@@ -31,12 +33,18 @@ setup:
 
 install: setup
 	@echo "Installing dependencies..."
-	$(PIP) install -r requirements.txt
+	$(PYTHON) -m pip install -r requirements.txt
 	@echo "✓ Dependencies installed"
 
+edit: setup
+	@echo "Installing in editable mode..."
+	$(PYTHON) -m pip install -e ".[dev]"
+	@echo "✓ Editable install complete"
+
+# Train model - works on Linux and Windows (uses python, not PYTHONPATH)
 train-model:
 	@echo "Training model..."
-	PYTHONPATH=. $(PYTHON) scripts/train_model.py
+	@$(PYTHON) -c "import sys, os; sys.path.insert(0, os.path.abspath('.')); from scripts.train_model import main; main()"
 	@echo "✓ Model trained"
 
 lint:
@@ -62,7 +70,7 @@ test-cov:
 run:
 	@echo "Starting API at http://localhost:$(PORT)"
 	@echo "Docs: http://localhost:$(PORT)/docs"
-	uvicorn src.api.main:app --reload --host 0.0.0.0 --port $(PORT)
+	$(PYTHON) -m uvicorn src.api.main:app --reload --host 0.0.0.0 --port $(PORT)
 
 docker-build:
 	@echo "Building Docker image..."
