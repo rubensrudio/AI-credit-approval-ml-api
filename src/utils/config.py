@@ -2,11 +2,19 @@
 Application configuration module.
 """
 from functools import lru_cache
+from pydantic_settings import SettingsConfigDict
+from pydantic import Field
 from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
     """Application configuration via environment variables."""
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+    )
 
     # Environment
     environment: str = "development"
@@ -18,13 +26,15 @@ class Settings(BaseSettings):
     api_title: str = "Credit Approval ML API"
     api_version: str = "1.0.0"
 
+    # Security
+    allowed_origins: str = Field(
+        default="*",
+        description="Comma-separated list of allowed CORS origins",
+    )
+
     # Model
     model_path: str = "models_trained/credit_model.pkl"
     scaler_path: str = "models_trained/scaler.pkl"
-
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
 
     @property
     def is_production(self) -> bool:

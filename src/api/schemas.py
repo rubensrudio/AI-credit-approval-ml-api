@@ -1,21 +1,14 @@
 """
-Pydantic validation schemas.
+Pydantic validation schemas using Pydantic v2 conventions.
 """
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class PredictionRequest(BaseModel):
     """Request schema for prediction."""
 
-    age: float = Field(..., gt=0, le=100, description="Customer age")
-    income: float = Field(..., gt=0, description="Annual income in currency")
-    credit_score: float = Field(..., ge=0, le=1000, description="Credit score")
-    loan_amount: float = Field(..., gt=0, description="Requested loan amount")
-    employment_years: float = Field(..., ge=0, le=60, description="Years employed")
-    existing_debts: float = Field(..., ge=0, description="Existing debts")
-
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "age": 35,
                 "income": 50000,
@@ -24,24 +17,33 @@ class PredictionRequest(BaseModel):
                 "employment_years": 8,
                 "existing_debts": 5000,
             }
-        }
+        },
+    )
+
+    age: float = Field(..., gt=0, le=100, description="Customer age")
+    income: float = Field(..., gt=0, description="Annual income in currency")
+    credit_score: float = Field(..., ge=0, le=1000, description="Credit score")
+    loan_amount: float = Field(..., gt=0, description="Requested loan amount")
+    employment_years: float = Field(..., ge=0, le=60, description="Years employed")
+    existing_debts: float = Field(..., ge=0, description="Existing debts")
 
 
 class PredictionResponse(BaseModel):
     """Response schema for prediction."""
 
-    approved: bool = Field(..., description="Credit approved or not")
-    approval_probability: float = Field(..., ge=0, le=1, description="Approval probability")
-    risk_level: str = Field(..., description="Risk level: low, medium, high")
-
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "approved": True,
                 "approval_probability": 0.87,
                 "risk_level": "low",
             }
-        }
+        },
+    )
+
+    approved: bool = Field(..., description="Credit approved or not")
+    approval_probability: float = Field(..., ge=0, le=1, description="Approval probability")
+    risk_level: str = Field(..., description="Risk level: low, medium, high")
 
 
 class HealthResponse(BaseModel):

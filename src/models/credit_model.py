@@ -1,9 +1,8 @@
 """
 Machine Learning models module.
 """
-import pickle
+import joblib
 from pathlib import Path
-from typing import Tuple
 
 import numpy as np
 import pandas as pd
@@ -114,27 +113,21 @@ class CreditApprovalModel:
 
         Path(model_path).parent.mkdir(parents=True, exist_ok=True)
 
-        with open(model_path, "wb") as f:
-            pickle.dump(self.model, f)
-
-        with open(scaler_path, "wb") as f:
-            pickle.dump(self.scaler, f)
+        joblib.dump(self.model, model_path)
+        joblib.dump(self.scaler, scaler_path)
 
         logger.info(f"Model saved at {model_path}")
         logger.info(f"Scaler saved at {scaler_path}")
 
     def load(self, model_path: str, scaler_path: str) -> None:
         """
-        Load model and scaler from pickle files.
+        Load model and scaler from joblib files.
 
         Args:
             model_path: Path to model file
             scaler_path: Path to scaler file
         """
-        with open(model_path, "rb") as f:
-            self.model = pickle.load(f)
-
-        with open(scaler_path, "rb") as f:
-            self.scaler = pickle.load(f)
+        self.model = joblib.load(model_path)
+        self.scaler = joblib.load(scaler_path)
 
         logger.info(f"Model loaded from {model_path}")

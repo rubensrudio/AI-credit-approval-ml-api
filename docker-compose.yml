@@ -12,6 +12,7 @@ services:
       LOG_LEVEL: INFO
       API_HOST: 0.0.0.0
       API_PORT: 8000
+      ALLOWED_ORIGINS: "*"
       MODEL_PATH: models_trained/credit_model.pkl
       SCALER_PATH: models_trained/scaler.pkl
     volumes:
